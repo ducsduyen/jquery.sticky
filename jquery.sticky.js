@@ -39,7 +39,7 @@
                     //log("event", "sticky-start");
                 }
                 $this.css({ position: "fixed", top: settings.topSpacing }); //stick it
-                $holder.height($this.height());//Hiển thị holder
+                $holder.height($this.outerHeight());//Hiển thị holder
                 $this.trigger("sticky-bottom-unreached");
                 //log("event", "sticky-bottom-unreached");
 
@@ -49,7 +49,7 @@
                     //log("event", "sticky-bottom-reached");
                 }
                 $this.css({ position: "absolute", top: (stickermax - $offsetParent.offset().top + settings.topSpacing) + "px", }); //set sticker right above the footer
-                $holder.height($this.height());//Hiển thị holder
+                $holder.height($this.outerHeight());//Hiển thị holder
                 //log("stickermax - $offsetParent.offset().top", stickermax - $offsetParent.offset().top);
 
             } else {
