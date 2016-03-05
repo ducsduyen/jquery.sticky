@@ -1,7 +1,7 @@
 
 jQuery Sticky Plugin
 ======================
-Sticky is a jQuery plugin that gives you the ability to make any element on your page always stay visible.
+Sticky is a jQuery plugin that gives you the ability to make any element on your page always stay visible. jQuery Sticky not using wraper div element.
 
 Usage
 =======================
