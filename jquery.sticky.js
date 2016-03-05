@@ -27,8 +27,8 @@
             var windowpos = $(window).scrollTop();
             var stickermax = $(document).outerHeight() - settings.bottomSpacing - settings.topSpacing - $this.outerHeight();
 
-            if (stickermax <= 0 //Nếu không có khoảng trống để trượt thì thôi
-                || $this.height() <= 0) //Nếu chiều cao của sticker bằng 0
+            if (stickermax <= 0 //if sticker not has spacing to slide
+                || $this.height() <= 0) //if sticker height equal 0
             {
                 return;
             }
@@ -39,7 +39,7 @@
                     //log("event", "sticky-start");
                 }
                 $this.css({ position: "fixed", top: settings.topSpacing }); //stick it
-                $holder.height($this.outerHeight());//Hiển thị holder
+                $holder.height($this.outerHeight());//show holder
                 $this.trigger("sticky-bottom-unreached");
                 //log("event", "sticky-bottom-unreached");
 
@@ -49,7 +49,7 @@
                     //log("event", "sticky-bottom-reached");
                 }
                 $this.css({ position: "absolute", top: (stickermax - $offsetParent.offset().top + settings.topSpacing) + "px", }); //set sticker right above the footer
-                $holder.height($this.outerHeight());//Hiển thị holder
+                $holder.height($this.outerHeight());//show holder
                 //log("stickermax - $offsetParent.offset().top", stickermax - $offsetParent.offset().top);
 
             } else {
@@ -77,7 +77,7 @@
             var $this = $(this);
             var $offsetParent = $this.offsetParent();
 
-            $this.width($this.width());//Cố định css width để khi fixed không bị tự động thay đổi chiều rộng
+            $this.width($this.width());//set css width for sticker
             var $holder = $("<div class='sticky-holder' style='visibility: hidden;height:0;display:block'></div>").insertBefore($this);
 
             scroller($this, $offsetParent, $holder);
