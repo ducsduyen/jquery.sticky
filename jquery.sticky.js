@@ -1,8 +1,8 @@
-// Sticky Plugin v1 for jQuery
+// Sticky Plugin v1.0.1 for jQuery
 // =============
-// Author: Ducsduyen 
+// Author: ducsduyen 
 // Created: 03/03/2016
-// Updated: 04/03/2016
+// Updated: 31/03/2016
 
 (function ($) {
 
@@ -21,15 +21,16 @@
         //    }
         //}
         var scroller = function ($this, $offsetParent, $holder) {
-            //log("id", $this.attr("id"));
+
             var offset = $holder.offset();
 
             var windowpos = $(window).scrollTop();
             var stickermax = $(document).outerHeight() - settings.bottomSpacing - settings.topSpacing - $this.outerHeight();
 
             if (stickermax <= 0 //if sticker not has spacing to slide
-                || $this.height() <= 0) //if sticker height equal 0
-            {
+                || $this.height() <= 0  //if sticker height equal 0
+                || (stickermax - offset.top) <= 0 //if sticker not has spacing to slide
+            ) {
                 return;
             }
 
@@ -46,15 +47,15 @@
             } else if (windowpos >= stickermax) {
                 if ($this.css("position") != "absolute") {
                     $this.trigger("sticky-bottom-reached");
-                    //log("event", "sticky-bottom-reached");
+                    log("event", "sticky-bottom-reached");
                 }
-                $this.css({ position: "absolute", top: (stickermax - $offsetParent.offset().top + settings.topSpacing) + "px", }); //set sticker right above the footer
+                $this.css({ position: "absolute", top: (stickermax - $offsetParent.offset().top + settings.topSpacing) + "px", });
                 $holder.height($this.outerHeight());//show holder
                 //log("stickermax - $offsetParent.offset().top", stickermax - $offsetParent.offset().top);
 
             } else {
 
-                if ($this.css("position") != "") {
+                if ($this.css("position") == "fixed" || $this.css("position") == "absolute") {
                     $this.trigger("sticky-end");
                     //log("event", "sticky-end");
                 }
@@ -86,6 +87,6 @@
 
         });
     }
-    //$.fn.sticky.debug = false;
+    //$.fn.sticky.debug = true;
 
 }(jQuery));
