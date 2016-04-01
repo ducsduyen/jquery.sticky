@@ -1,13 +1,11 @@
-/*
-jQuery.Sticky v1.0.1 
+/* 
+jQuery.Sticky v1.0.1
 Author: ducsduyen 
-Updated: 31/03/2016
+Updated: 01/04/2016
 */
-
 (function ($) {
 
     $.fn.sticky = function (options) {
-        // Bob's default settings:
         var defaults = {
             topSpacing: 0,
             bottomSpacing: 0,
@@ -15,11 +13,11 @@ Updated: 31/03/2016
         };
         var settings = $.extend({}, defaults, options);
 
-        var log = function (message, params) {
-            if (typeof console == "object" && $.fn.sticky.debug) {
-                console.log(message, params);
-            }
-        }
+        // var log = function (message, params) {
+        //    if (typeof console == "object" && $.fn.sticky.debug) {
+        //        console.log(message, params);
+        //    }
+        // }
         var scroller = function ($this, $offsetParent, $holder) {
 
             var offset = $holder.offset();
@@ -29,58 +27,55 @@ Updated: 31/03/2016
 
             if (stickermax <= 0 //if sticker not has spacing to slide
                 || $this.height() <= 0  //if sticker height equal 0
-
+                 
             ) {
                 return;
             }
 
-            if (windowpos > (offset.top - settings.topSpacing)
-                && windowpos < stickermax
+            if (windowpos > (offset.top - settings.topSpacing) 
+                && windowpos  < stickermax
                 ) {
                 if ($this.css("position") != "fixed") {
                     $this.trigger("sticky-start");
-                    log("event", "sticky-start");
-                    $this.css({ position: "fixed", top: settings.topSpacing }); //stick it
+                    //log("event", "sticky-start");
+                     $this.css({ position: "fixed", top: settings.topSpacing }); //stick it
                 }
-                //$holder.height($this.outerHeight());//show holder
                 $this.trigger("sticky-bottom-unreached");
-                log("event", "sticky-bottom-unreached");
+                 //log("event", "sticky-bottom-unreached");
 
-            } else if (windowpos > (offset.top - settings.topSpacing)
+            } else if (windowpos > (offset.top - settings.topSpacing) 
                 && windowpos >= stickermax
-                ) {
-
+                ) { 
+                    
                 if ($this.css("position") == "fixed") { //if sticky started
                     $this.trigger("sticky-bottom-reached");
-                    log("event", "sticky-bottom-reached");
-                    $this.css({ position: "absolute", top: (stickermax - $offsetParent.offset().top + settings.topSpacing) + "px" });
-                } else if ($this.css("position") == "absolute") { //if sticky bottom reached
-
-                    $this.css({ top: (stickermax - $offsetParent.offset().top + settings.topSpacing) + "px" });
-                    //$holder.height($this.outerHeight());//show holder
-                    log("stickermax - $offsetParent.offset().top", stickermax - $offsetParent.offset().top);
-                } else { //if sticky not started
-
+                    //log("event", "sticky-bottom-reached");
+                    $this.css({ position: "absolute", top: (stickermax - $offsetParent.offset().top + settings.topSpacing) + "px"});
+                }else if($this.css("position") == "absolute"){ //if sticky bottom reached
+                    
+                    $this.css({ top: (stickermax - $offsetParent.offset().top + settings.topSpacing) + "px"});
+                    //log("event", "sticky-bottom-reaching");
+                }else{ //if sticky not started
+                    if(stickermax > offset.top){ //if have spacing to slide
+                        $this.css({position: "absolute",  top: (stickermax - $offsetParent.offset().top + settings.topSpacing) + "px"});
+                        //log("event", "sticky-start-bottom-reached");
+                    }
                 }
 
             } else { //if windowpos < offset.top - settings.topSpacing
 
                 if ($this.css("position") == "fixed" || $this.css("position") == "absolute") {
                     $this.trigger("sticky-end");
-                    log("event", "sticky-end");
+                     //log("event", "sticky-end");
                 }
 
-                //$holder.height(0);//Ẩn holder
                 $this.css({ position: "", top: "" });
             }
 
-            log("ooffset", offset);
-            log("position", $this.position());
-            log("offset", $this.offset());
-            log("windowpos", windowpos);
-            log("$offsetParent.offset().top", $offsetParent.offset().top);
-            log("height", $this.height());
-            log("stickermax", stickermax);
+            // log("holder offset", offset);
+            // log("position", $this.position());
+            // log("sticker offset", $this.offset());
+            // log("windowpos", windowpos);
         };
 
         return this.each(function () {
@@ -97,6 +92,4 @@ Updated: 31/03/2016
 
         });
     }
-    //$.fn.sticky.debug = true;
-
 }(jQuery));
