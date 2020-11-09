@@ -9,7 +9,8 @@ Updated: 01/04/2016
         var defaults = {
             topSpacing: 0,
             bottomSpacing: 0,
-            debug: false
+            debug: false,
+			container: false
         };
         var settings = $.extend({}, defaults, options);
 
@@ -23,7 +24,8 @@ Updated: 01/04/2016
             var offset = $holder.offset();
 
             var windowpos = $(window).scrollTop();
-            var stickermax = $(document).outerHeight() - settings.bottomSpacing - settings.topSpacing - $this.outerHeight();
+            var stickerContainerBottom = (settings.container) ? ((1*settings.container.offset().top) + (1*settings.container.outerHeight())) : $(document).outerHeight();
+			var stickermax = stickerContainerBottom - settings.bottomSpacing - settings.topSpacing - $this.outerHeight();
 
             if (stickermax <= 0 //if sticker not has spacing to slide
                 || $this.height() <= 0  //if sticker height equal 0
